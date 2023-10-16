@@ -1,0 +1,25 @@
+[data-animation='text-reveal'] {
+	span {
+		display: inline-block;
+		overflow: hidden;
+		vertical-align: top;
+	}
+	span span {
+		transform: translateY(100%);
+		will-change: transform;
+	}
+}
+
+img[data-src] {
+	opacity: 0;
+}
+
+img {
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.image-wrapper {
+	position: relative;
+	overflow: hidden;
+}

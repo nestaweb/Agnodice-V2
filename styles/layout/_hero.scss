@@ -1,0 +1,45 @@
+.hero {
+	&__content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		max-width: 120ch;
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	&__logo {
+		position: relative;
+		object-fit: cover;
+		max-width: 15ch;
+		margin-bottom: 4rem;
+	}
+
+	&__title {
+		color: var(--color-text--light);
+
+		span {
+			color: var(--color-text--dark);
+		}
+	}
+
+	&__image {
+		position: relative;
+	}
+
+	&__play {
+		@include center_align;
+
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		z-index: 2;
+		cursor: pointer;
+		color: var(--color-text--white);
+	
+		&__text {
+			@include fluid-type(430px, 1440px, 16px, 24px);
+		}
+	}
+}

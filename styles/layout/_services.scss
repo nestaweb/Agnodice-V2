@@ -1,0 +1,29 @@
+.services {
+	@include page-grid;
+
+	&__heading {
+		color: var(--color--blue);
+	}
+
+	&__left {
+		height: 100%;
+	}
+
+	&__image {
+		height: 100%;
+	}
+
+	&__right {
+		margin-top: 16rem;
+		margin-bottom: 16rem;
+	}
+
+	&__content {
+		max-width: 65ch;
+	}
+
+	&__text {
+		margin-bottom: 4.8rem;
+		@include fluid-type(320px, 1440px, 14px, 18px);
+	}
+}

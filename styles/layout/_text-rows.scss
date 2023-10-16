@@ -1,0 +1,18 @@
+.text-rows {
+	&__list {
+		list-style: none;
+		display: flex;
+		gap: 2rem;
+		flex-direction: column;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		@include fluid-type(320px, 1440px, 14px, 18px);
+
+		svg path {
+			fill: var(--color-button--orange)
+		}
+	}
+}
