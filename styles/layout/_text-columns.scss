@@ -1,6 +1,11 @@
 .text-columns {
 	@include page-grid;
 
+	&__heading {
+		display: flex;
+		align-items: center;
+		gap: 3rem;
+	}
 	.button {
 		margin-left: auto;
 	}

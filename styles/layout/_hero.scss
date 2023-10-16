@@ -12,8 +12,9 @@
 	&__logo {
 		position: relative;
 		object-fit: cover;
-		max-width: 15ch;
-		margin-bottom: 4rem;
+		// color: var(--color--dark--beige);
+		@include fluid-type(430px, 1440px, 48px, 54px);
+		margin: 5rem 0 8rem;
 	}
 
 	&__title {

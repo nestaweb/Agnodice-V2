@@ -3,6 +3,9 @@
 
 	&__heading {
 		color: var(--color--blue);
+		display: flex;
+		align-items: flex-start;
+		gap: 3rem;
 	}
 
 	&__left {
