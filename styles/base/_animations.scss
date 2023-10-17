@@ -23,3 +23,10 @@ img {
 	position: relative;
 	overflow: hidden;
 }
+
+[data-animation='parallax-image'] {
+	overflow: hidden;
+	img {
+		height: 150% !important;
+	}
+}

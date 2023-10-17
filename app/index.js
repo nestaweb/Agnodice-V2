@@ -1,14 +1,12 @@
 import "../styles/index.scss";
 import Lenis from "@studio-freight/lenis";
-
-import TextReveal from "./animations/textReveal";
-import Button from "./animations/button";
+import Home from "./pages/Home";
 
 class App {
 	constructor() {
+		document.body.style.opacity = 1;
 		this._createLenis();
-		this._createTextReveals();
-		this._createButtons();
+		this._createHome();
 		this._render();
 	}
 
@@ -18,24 +16,8 @@ class App {
 		})
 	}
 
-	_createTextReveals() {
-		const textItems = [...document.querySelectorAll("[data-animation='text-reveal']")];
-
-		textItems.forEach((textItem) => {
-			new TextReveal({
-				element: textItem
-			});
-		});
-	}
-
-	_createButtons() {
-		const buttons = [...document.querySelectorAll("[data-animation='button']")];
-
-		buttons.forEach((button) => {
-			new Button({
-				element: button
-			});
-		});
+	_createHome() {
+		this.home = new Home();
 	}
 
 	_render(time) {
