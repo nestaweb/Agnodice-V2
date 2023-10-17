@@ -9,12 +9,13 @@
 	&__heading {
 		display: flex;
 		align-items: center;
-		gap: 3rem;
+		gap: 0.5ch;
 	}
 
 	&__item {
 		display: flex;
 		align-items: center;
+		gap: 0.5ch;
 		@include fluid-type(320px, 1440px, 14px, 18px);
 
 		svg path {

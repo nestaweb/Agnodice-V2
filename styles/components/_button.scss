@@ -29,4 +29,27 @@
 			fill: var(--color-button-text--dark);
 		}
 	}
+
+	&[data-animation="button"] {
+		transform: scale(0);
+		transform-origin: 50% 50%;
+		> span {
+			display: inline-block;
+			width: 0px;
+			overflow: hidden;
+		}
+
+		> span span {
+			display: inline-block;
+			transform: translateY(100%);
+			white-space: nowrap;
+		}
+
+		svg {
+			width: 0px;
+			overflow: hidden;
+			transform: translateX(-8px);
+			opacity: 0;
+		}
+	}
 }

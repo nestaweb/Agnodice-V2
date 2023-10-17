@@ -1,10 +1,10 @@
 [data-animation='text-reveal'] {
-	span {
+	div {
 		display: inline-block;
 		overflow: hidden;
 		vertical-align: top;
 	}
-	span span {
+	div div {
 		transform: translateY(100%);
 		will-change: transform;
 	}
