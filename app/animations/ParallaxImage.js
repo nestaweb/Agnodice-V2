@@ -7,7 +7,6 @@ export default class ParallaxImage {
 		this.section = imageSection;
 		this.image = this.section.querySelector("img");
 		this.heightOffset = this.image.offsetHeight - this.section.offsetHeight;
-		console.log(this.heightOffset);
 
 		this._animate();
 	}
