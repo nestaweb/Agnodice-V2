@@ -18,6 +18,11 @@ html.lenis {
 	pointer-events: none;
 }
 
+body {
+	background-color: var(--color-secondary);
+	color: var(--color-primary);
+}
+
 body.no-scroll {
 	overflow: hidden;
 	height: 100vh;

@@ -17,13 +17,23 @@
 		align-items: center;
 		background-color: transparent;
 		border-radius: 1000px;
+		position: fixed;
+		top: 2%;
+		right: 2%;
 		transition: background 0.4s ease-in-out;
+
+		.line {
+			width: 30px;
+			height: 1.5px;
+			background-color: var(--color-primary);
+			transition: all 0.4s ease-in-out;
+		}
 
 		&--active {
 			background-color: white;
 			.line:first-of-type {
 				transform: rotate(45deg) translate(5.5px, 5.5px);
-				}
+			}
 			.line:nth-of-type(2) {
 				opacity: 0;
 				transform: translateX(-100%);
@@ -34,12 +44,7 @@
 		}
 	}
 
-	.line {
-		width: 30px;
-		height: 1.5px;
-		background-color: var(--color-primary);
-		transition: all 0.4s ease-in-out;
-	}
+	
 
 	&__menu {
 		position: fixed;
@@ -62,7 +67,7 @@
 			width: 100%;
 			background-color: var(--color-background--dark--dark);
 			list-style: none;
-			color: var(--color-secondary);
+			color: var(--color-text--light);
 			margin-left: 0rem;
 			display: flex;
 			gap: 5vh;
