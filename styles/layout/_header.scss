@@ -4,6 +4,18 @@
 	align-items: center;
 	padding: 24px 0;
 
+	&__logo {
+		display: flex;
+		align-items: center;
+		gap: 2vh;
+
+		img {
+			width: 15%;
+			object-fit: cover;
+			opacity: 0.9;
+		}
+	}
+
 	&__hamburger {
 		border: none;
 		display: flex;
@@ -92,7 +104,7 @@
 			transition: background 0.4s ease-in-out;
 
 			&:hover {
-				background-size: 70% 1%;
+				background-size: 90% 1%;
 			}
 		}
 	}
