@@ -17,15 +17,37 @@ export async function authenticateUser() {
 	  console.log('Token JWT obtained:', token);
   
 	  // Store the token securely, e.g., in a cookie or local storage
-	  window.localStorage.setItem("jwtToken", token);
+	  window.localStorage.setItem('jwtToken', token);
   
 	  // Redirect to the admin page
-	  window.location.href = 'admin.html';
+	  window.location.href = '/admin';
 	} catch (error) {
 	  console.error('Authentication failed', error);
 	  alert('Authentication failed. Please check your credentials.');
 	}
   }
+  
+
+export async function fetchData() {
+  const token = getJwtToken();
+
+  try {
+    const response = await axios.get(`${apiUrl}/admin`, {
+      headers: {
+        Authorization: `${token}`, // Include the token in the Authorization header
+      },
+    });
+
+  } catch (error) {
+    console.error('Failed to fetch admin data', error);
+  }
+}
+
+// Function to retrieve the JWT token from local storage
+function getJwtToken() {
+  const token = window.localStorage.getItem("jwtToken");
+  return token;
+}
 
 document.getElementById('loginForm').addEventListener('submit', (event) => {
   event.preventDefault();
@@ -34,3 +56,6 @@ document.getElementById('loginForm').addEventListener('submit', (event) => {
 
 // Ensuring that the authenticateUser function is available globally
 window.authenticateUser = authenticateUser;
+
+// Example: Make authenticated request after successful login
+fetchData();

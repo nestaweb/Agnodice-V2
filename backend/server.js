@@ -22,48 +22,79 @@ const users = [
 
 // Middleware to verify the JWT token
 function authenticateToken(req, res, next) {
-  const token = req.header('Authorization');
-  if (!token) return res.status(401).send('Unauthorized access');
+	const token = req.header('Authorization');
+	
+	console.log('Token authenticateToken:', token);
 
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.status(403).send('Invalid token');
-    req.user = user;
-    next();
+	if (!token) {
+	  // Redirect to the login page if the token is missing
+	  return res.redirect('/login');
+	}
+	
+	jwt.verify(token, secretKey, (err, user) => {
+	  if (err) {
+		// Redirect to the login page if the token is invalid
+		// return res.redirect('/login');
+	  }
+  
+	  req.user = user;
+	  next();
+	});
+  }
+
+  app.get('/api/admin', authenticateToken, (req, res) => {
+	// This route is protected by JWT
+	// You can add your logic to serve the admin data here
+	res.json({ message: 'You have access to admin data!' });
   });
-}
-
-// Redirect to root if attempting to access admin.html without a valid token
-app.use('/admin.html', (req, res) => {
-	console.log('Redirecting to root...');
-	// res.redirect('/'); // Redirect to the root URL
-  });
-
-// Protected endpoint using JWT authentication
-app.get('/api/admin', authenticateToken, (req, res) => {
-  // This route is protected by JWT
-  // You can add your logic to serve the admin page here
-  res.sendFile(path.join(__dirname, '../frontend', 'admin.html'));
-});
-
-// Serve static files from the frontend folder
-app.use(express.static(path.join(__dirname, '../frontend')));
+  
+  
 
 // Authentication endpoint
 app.post('/api/authenticate', async (req, res) => {
-  const { username, password } = req.body;
+	const { username, password } = req.body;
+	console.log(req.body);
+  
+	// Find the user in the database (replace with a database query)
+	const user = users.find((u) => u.username === username);
+  
+	// Check if the user exists and the password is correct
+	if (user && (await bcrypt.compare(password, user.passwordHash))) {
+	  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+  
+	  // Send the token in the response
+	  console.log('Token:', token);
+	  res.json({ token });
+	} else {
+	  res.status(401).send('Invalid credentials');
+	}
+  });
 
-  // Find the user in the database (replace with a database query)
-  const user = users.find((u) => u.username === username);
 
-  // Check if the user exists and the password is correct
-  if (user && (await bcrypt.compare(password, user.passwordHash))) {
-    const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
-    res.json({ token });
-  } else {
-    res.status(401).send('Invalid credentials');
-  }
-});
+app.get('/admin', (req, res) => {
+	const adminFilePath = path.join(__dirname, '../frontend', 'admin.html');
+	console.log('Sending admin.html from path:', adminFilePath);
+	
+	res.sendFile(adminFilePath, (err) => {
+	  if (err) {
+		console.error('Error sending file:', err);
+		res.status(500).send('Error serving admin.html');
+	  }
+	});
+  });
 
+  app.get('/login', (req, res) => {
+	const loginFilePath = path.join(__dirname, '../frontend', 'login.html');
+	console.log('Sending login.html from path:', loginFilePath);
+	
+	res.sendFile(loginFilePath, (err) => {
+	  if (err) {
+		console.error('Error sending file:', err);
+		res.status(500).send('Error serving login.html');
+	  }
+	});
+  });
+  
 app.listen(SERVER_PORT, () => {
   console.log(`Server is running on port ${SERVER_PORT}`);
 });

@@ -6,7 +6,11 @@ export default {
 				changeOrigin: true,
 				// rewrite: (path) => path.replace(/^\/api/, '')
 			},
-			'/api/admin': {
+			'/admin': {
+				target: 'http://localhost:3001',
+				changeOrigin: true,
+			},
+			'/login': {
 				target: 'http://localhost:3001',
 				changeOrigin: true,
 			}
