@@ -31,15 +31,15 @@ export async function authenticateUser() {
 export async function fetchData() {
   const token = getJwtToken();
   if (!token) {
-	console.error('No JWT token found');
-	window.location.href = '/login';
-	return;
+    console.error('No JWT token found');
+    window.location.href = '/login';
+    return;
   }
 
   try {
     const response = await axios.get(`${apiUrl}/admin`, {
       headers: {
-        Authorization: `${token}`, // Ensure 'Bearer' is prepended to the token
+        Authorization: `Bearer ${token}`, // Ensure 'Bearer' is prepended to the token
       },
     });
 
