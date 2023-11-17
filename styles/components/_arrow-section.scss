@@ -1,0 +1,10 @@
+.arrow-section {
+	object-fit: cover;
+	min-width: 2ch;
+	max-width: 2ch;
+	height: auto;
+	object-fit: cover;
+	path {
+		fill: var(--color--orange);
+	}
+}
