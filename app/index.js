@@ -1,4 +1,3 @@
-import "../styles/index.scss";
 import Lenis from "@studio-freight/lenis";
 import Home from "./pages/Home";
 
