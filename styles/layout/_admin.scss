@@ -56,4 +56,50 @@
 			}
 		}
 	}
+	&__image {
+		background-color: rgba(0, 0, 0, 0.094);
+		padding: 1vh 1vw;
+		border-radius: 10px;
+		display: flex;
+		gap: 1vh;
+		flex-direction: column;
+		height: min-content;
+		&:nth-child(odd) {
+			grid-column: 2/span 5;
+		}
+		&:nth-child(even) {
+			grid-column: 7/span 5;
+		}
+
+		h3 {
+			font-size: 3rem;
+			font-weight: 300;
+		}
+
+		img {
+			max-height: 40vh;
+			border-radius: 10px;
+		}
+
+		button {
+			background-color: whitesmoke;
+			border: none;
+			padding: 1vh 1vw;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
+			
+			&.admin__button--active {
+				background-color: rgb(0, 170, 237);
+				color: white;
+			}
+			&:disabled {
+				cursor: default;
+			}
+		}
+
+		input {
+			display: none;
+		}
+	}
 }

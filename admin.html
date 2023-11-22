@@ -66,13 +66,41 @@
 					<textarea name="text10" id="text10" cols="30" rows="10" class="admin__text__content">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde nam accusamus beatae error. Consequatur, autem? Nisi, dignissimos? Perferendis unde amet nam repellendus! Non at, provident doloremque eius alias est quam?</textarea>
 					<button class="admin__text__saveButton">Sauvegarder</button></div>
 			</div> -->
+
+			<div class="admin__image col-2--span-5" data-key="heroImage">
+				<h3 class="admin__image__title">Hero Image</h3>
+				<img src="./images/hero.webp" alt="Hero Image " id="heroImage" />
+				<input type="file" class="imageInput" accept="image/*" data-image="0">
+				<button class="uploadImage">Choisir un fichier</button>
+				<button class="admin__button uploadButton" data-image="0" disabled>Upload Image</button>
+			</div>
+			<div class="admin__image col-2--span-5" data-key="service0">
+				<h3 class="admin__image__title">Accompagnement des codir en entreprise</h3>
+				<img src="./images/brain-storming.webp" alt="Accompagnement des codir en entreprise" id="service0" />
+				<input type="file" class="imageInput" accept="image/*" data-image="1">
+				<button class="uploadImage">Choisir un fichier</button>
+				<button class="admin__button uploadButton" data-image="1" disabled>Upload Image</button>
+			</div>
+			<div class="admin__image col-2--span-5" data-key="service1">
+				<h3 class="admin__image__title">Sensibilisation au burn out</h3>
+				<img src="./images/image_grid.webp" alt="Sensibilisation au burn out" id="service1" />
+				<input type="file" class="imageInput" accept="image/*" data-image="2">
+				<button class="uploadImage">Choisir un fichier</button>
+				<button class="admin__button uploadButton" data-image="2" disabled>Upload Image</button>
+			</div>
+			<div class="admin__image col-2--span-5" data-key="service2">
+				<h3 class="admin__image__title">Accompagnement individuel</h3>
+				<img src="./images/Linda-herault.png" alt="Accompagnement individuel" id="service2" />
+				<input type="file" class="imageInput" accept="image/*" data-image="3">
+				<button class="uploadImage">Choisir un fichier</button>
+				<button class="admin__button uploadButton" data-image="3" disabled>Upload Image</button>
+			</div>
 		</section>
 
-
-		<script type="module" src="./scripts/adminPanel.js"></script>
-		<script type="module" src="./app/index.js"></script>
 		<script type="module">
 			import "./styles/pages/admin.scss";
 		</script>
+		<script type="module" src="./scripts/adminPanel.js"></script>
+		<script type="module" src="./app/index.js"></script>
 	</body>
 </html>

@@ -96,49 +96,127 @@ function getJwtToken() {
   return window.localStorage.getItem('jwtToken');
 }
 
-async function saveChange() {
-	document.querySelectorAll('.admin__text').forEach((element) => {
-		const textarea = element.querySelector("textarea");
-		const button = element.querySelector("button");
-		
-		textarea.addEventListener("input", async () => {
-			try {
-				const text = await fetchSpecificText(element.dataset.key);
-				const textareaContent = textarea.value;
-				const originalTextContent = text.content ? text.content.trim() : '';
-		
-				if (textareaContent !== originalTextContent) {
-					button.classList.add("admin__button--active");
-					button.disabled = false;
-				} else {
-					button.disabled = true;
-					button.classList.remove("admin__button--active");
-				}
-			} catch (error) {
-				console.error('Error fetching text:', error);
-			}
-		});
-			
-		button.addEventListener("click", async () => {
-			try {
-			const key = element.dataset.key;
-			const content = textarea.value;
-		
-			// Send updated content to the backend
-			await updateTextOnBackend(key, content);
-		
-			// Reset button state
-			button.classList.remove("admin__button--active");
-			button.disabled = true;
-		
-			console.log(`Updated content for key: ${key}`);
-			} catch (error) {
-			console.error('Error updating content:', error);
-			}
+function uploadImageButton() {
+	const imagesSection = document.querySelectorAll('.admin__image');
+
+	imagesSection.forEach(element => {
+		element.querySelector(".uploadImage").addEventListener("click", () => {
+			element.querySelector(".imageInput").click();
 		});
 	});
 }
+
+// Function to handle text updates
+async function handleTextUpdate(element) {
+	const textarea = element.querySelector("textarea");
+	const button = element.querySelector("button.admin__text__saveButton");
+  
+	textarea.addEventListener("input", async () => {
+	  try {
+		const text = await fetchSpecificText(element.dataset.key);
+		const textareaContent = textarea.value;
+		const originalTextContent = text.content ? text.content.trim() : '';
+  
+		if (textareaContent !== originalTextContent) {
+		  button.classList.add("admin__button--active");
+		  button.disabled = false;
+		} else {
+		  button.disabled = true;
+		  button.classList.remove("admin__button--active");
+		}
+	  } catch (error) {
+		console.error('Error fetching text:', error);
+	  }
+	});
+  
+	button.addEventListener("click", async () => {
+	  try {
+		const key = element.dataset.key;
+		const content = textarea.value;
+  
+		// Send updated content to the backend
+		await updateTextOnBackend(key, content);
+  
+		// Reset button state
+		button.classList.remove("admin__button--active");
+		button.disabled = true;
+  
+		console.log(`Updated content for key: ${key}`);
+	  } catch (error) {
+		console.error('Error updating content:', error);
+	  }
+	});
+  }
+
+  // Function to handle image upload
+// Function to handle image upload
+function uploadImage(key, file, imageIndex, path) {
 	
+	// Extract the current image path from the corresponding img tag
+	const formData = new FormData();
+  
+	formData.append('image', file);
+  
+	const button = document.querySelector(`button.admin__button[data-image="${imageIndex}"]`);
+	if (button.disabled) {
+	  return;
+	}
+  
+	button.disabled = true;
+  
+	axios.post(`${apiUrl}/upload?path=${path}`, formData)
+	  .then((response) => {
+		// Handle the response if needed
+	  })
+	  .catch((error) => {
+		alert(`Error uploading image ${error}`);
+	  })
+	  .finally(() => {
+		// Re-enable the button after the request is complete
+		button.disabled = true;
+	  });
+  }  
+  
+  function handleImageUpdate(element) {
+	const input = element.querySelector('input');
+	const button = element.querySelector('button.admin__button');
+	const img = element.querySelector('img');
+	const path = img.src.split('/').slice(-1);
+  
+	input.addEventListener('change', () => {
+	  const file = input.files[0];
+	  if (file) {
+		img.src = URL.createObjectURL(file);
+		button.disabled = false;
+		button.classList.add('admin__button--active');
+	  }
+	});
+  
+	button.addEventListener('click', async () => {
+	  const key = element.dataset.key;
+	  const file = input.files[0];
+  
+	  if (file) {
+		try {
+			const imageIndex = button.dataset.image; // Assuming you have a data-image attribute
+		  await uploadImage(key, file, imageIndex, path);
+		  button.disabled = true;
+		  button.classList.remove('admin__button--active');
+		} catch (error) {
+		  console.error('Error uploading image:', error);
+		}
+	  }
+	});
+  }
+
+async function saveChange() {
+	document.querySelectorAll('.admin__text').forEach(handleTextUpdate);
+	document.querySelectorAll('.admin__image').forEach(handleImageUpdate);
+  }
+
+// frontend/scripts/adminPanel.js
+  
+
 async function updateTextOnBackend(key, content) {
 	try {
 		// Send a request to the backend to update the content
@@ -154,3 +232,4 @@ async function updateTextOnBackend(key, content) {
 // Call fetchData when the script is loaded (you may want to trigger this based on user actions)
 fetchData();
 saveChange();
+uploadImageButton();
