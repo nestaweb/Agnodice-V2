@@ -1,31 +1,36 @@
-// frontend/scripts/login.js
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3001/api'; // Update this to the correct server port
+const apiUrl = 'http://localhost:3001/api';
 
 export async function authenticateUser() {
-  try {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
+  try {
     const response = await axios.post(`${apiUrl}/authenticate`, {
       username,
       password,
     });
 
-    const token = response.data.token;
-    console.log('Token JWT obtained:', token);
+    if (response.status === 200) {
+      const token = response.data.token;
+      console.log('Token JWT obtained:', token);
 
-    // Store the token securely, e.g., in a cookie or local storage
-    window.localStorage.setItem('jwtToken', token);
+      // Store the token securely, e.g., in a cookie or local storage
+      window.localStorage.setItem('jwtToken', token);
 
-    // Redirect to the admin page
-    window.location.href = '/admin';
+      // Redirect to the admin page
+      window.location.href = '/admin';
+    } else {
+      console.error('Authentication failed. Unexpected response status:', response.status);
+      alert('Authentication failed. Please check your credentials.');
+    }
   } catch (error) {
     console.error('Authentication failed', error);
     alert('Authentication failed. Please check your credentials.');
   }
 }
+
 
 export async function fetchData() {
   const token = getJwtToken();
@@ -33,7 +38,7 @@ export async function fetchData() {
   try {
     const response = await axios.get(`${apiUrl}/admin`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Ensure 'Bearer' is prepended to the token
+        Authorization: `${token}`,
       },
     });
 
@@ -48,10 +53,10 @@ function getJwtToken() {
   return window.localStorage.getItem('jwtToken');
 }
 
-document.getElementById('loginForm').addEventListener('submit', (event) => {
-  event.preventDefault();
+
+document.getElementById('loginForm').querySelector("button").addEventListener("click", () => {
   authenticateUser();
-});
+})
 
 // Ensure that the authenticateUser function is available globally
 window.authenticateUser = authenticateUser;

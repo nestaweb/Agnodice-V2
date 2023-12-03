@@ -70,26 +70,38 @@ async function fillData() {
 
 // Example function for making an authenticated request
 export async function fetchData() {
-  const token = getJwtToken();
-  if (!token) {
-    console.error('No JWT token found');
-    window.location.href = '/login';
-    return;
+	const token = getJwtToken();
+	console.log(token);
+  
+	if (!token) {
+	  console.error('No JWT token found');
+	  // Redirect to login only if there is no token
+	  window.location.href = '/login';
+	  return;
+	}
+  
+	try {
+	  const response = await axios.get(`${apiUrl}/admin`, {
+		headers: {
+		  Authorization: `${token}`,
+		},
+	  });
+  
+	  console.log('Admin data:', response.data);
+	  fillData(response.data); // Assuming fillData takes the fetched data as an argument
+	} catch (error) {
+	  console.error('Failed to fetch admin data', error);
+  
+	  if (error.response) {
+		console.error('Response data:', error.response.data);
+		console.error('Response status:', error.response.status);
+	  }
+  
+	  // Redirect to login in case of an error (invalid token, unauthorized, etc.)
+	  window.location.href = '/login';
+	}
   }
-
-  try {
-    const response = await axios.get(`${apiUrl}/admin`, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Ensure 'Bearer' is prepended to the token
-      },
-    });
-
-    console.log('Admin data:', response.data);
-    fillData();
-  } catch (error) {
-    console.error('Failed to fetch admin data', error);
-  }
-}
+  
 
 // Function to retrieve the JWT token from local storage
 function getJwtToken() {
